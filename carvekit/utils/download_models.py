@@ -210,7 +210,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
                     os.remove(cached_path)
                 raise ConnectionError(
                     f"Exception caught when downloading model! "
-                    f"Model name: {cached_path.name}. Exception: {str(e)}."
+                    f"Model name: {cached_path.name}. Exception: {str(e)}. cached_path: {str(cached_path)}"
                 )
                 print(cached_path)
             return cached_path
