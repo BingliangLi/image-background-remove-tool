@@ -127,7 +127,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
     def __init__(
         self,
         name: str = "Huggingface.co",
-        base_url: str = "https://huggingface.co",
+        base_url: str = "https://hf-mirror.com",
         fb_downloader: Optional["CachedDownloader"] = None,
     ):
         self.cache_dir = checkpoints_dir
