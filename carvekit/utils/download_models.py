@@ -165,6 +165,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
 
     def download_model_base(self, file_name: str) -> Path:
         cached_path = self.check_for_existence(file_name)
+        print(cached_path)
         if cached_path is not None:
             return cached_path
         else:
@@ -207,7 +208,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
 
 fallback_downloader: CachedDownloader = HuggingFaceCompatibleDownloader()
 downloader: CachedDownloader = HuggingFaceCompatibleDownloader(
-    base_url="https://cdn.carve.photos",
+    base_url="https://hf-mirror.com",
     fb_downloader=fallback_downloader,
     name="Carve CDN",
 )
