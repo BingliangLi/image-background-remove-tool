@@ -99,6 +99,9 @@ class CachedDownloader:
         pass
 
     def download_model(self, file_name: str) -> Path:
+        print("==============================")
+        print(file_name)
+        print("==============================")
         try:
             return self.download_model_base(file_name)
         except BaseException as e:
@@ -117,6 +120,9 @@ class CachedDownloader:
 
     @abstractmethod
     def download_model_base(self, file_name: str) -> Path:
+        print("==============================")
+        print(file_name)
+        print("==============================")
         """Download model from any source if not cached. Returns path if cached"""
 
     def __call__(self, file_name: str):
@@ -131,7 +137,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
         fb_downloader: Optional["CachedDownloader"] = None,
     ):
         self.cache_dir = checkpoints_dir
-        self.base_url = base_url
+        self.base_url = "https://hf-mirror.com"
         self._name = name
         self._fallback_downloader = fb_downloader
 
@@ -165,7 +171,9 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
 
     def download_model_base(self, file_name: str) -> Path:
         cached_path = self.check_for_existence(file_name)
+        print("==============================")
         print(cached_path)
+        print("==============================")
         if cached_path is not None:
             return cached_path
         else:
@@ -179,6 +187,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
             hugging_face_url = f"{self.base_url}/{url['repository']}/resolve/{url['revision']}/{url['filename']}"
 
             try:
+                print(cached_path)
                 r = requests.get(hugging_face_url, stream=True, timeout=10)
                 if r.status_code < 400:
                     with open(cached_path, "wb") as f:
@@ -203,6 +212,7 @@ class HuggingFaceCompatibleDownloader(CachedDownloader, ABC):
                     f"Exception caught when downloading model! "
                     f"Model name: {cached_path.name}. Exception: {str(e)}."
                 )
+                print(cached_path)
             return cached_path
 
 
